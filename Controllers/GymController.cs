@@ -60,9 +60,19 @@ public ActionResult UpdateGym(Gimnasio gymItem)
     }
     else
     {
-        existingGym.Name = gymItem.Name;
-        existingGym.Address = gymItem.Address;
-        existingGym.MonthPrice = gymItem.MonthPrice;
+        if (gymItem.Name!="string")
+        {
+            existingGym.Name = gymItem.Name;
+        }
+        if (gymItem.Address!="string")
+        {
+            existingGym.Address = gymItem.Address;
+        }
+        if (gymItem.MonthPrice != 0)
+        {
+            existingGym.MonthPrice = gymItem.MonthPrice;
+        }
+        
         _context.SaveChanges();
         return Ok();
     }
