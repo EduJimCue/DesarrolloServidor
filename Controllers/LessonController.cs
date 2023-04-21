@@ -78,16 +78,28 @@ public ActionResult UpdateLesson(Leccion lessonItem)
     }
     else
     {
+        existingLesson.TeacherId=lessonItem.TeacherId;
+        existingLesson.Minute=lessonItem.Minute;
          if (!teacher.Role)
         {
             return Conflict("El usuario seleccionado no es un profesor");
         }
-        existingLesson.Name = lessonItem.Name;
-        existingLesson.Capacity=lessonItem.Capacity;
-        existingLesson.TeacherId=lessonItem.TeacherId;
-        existingLesson.Description=lessonItem.Description;
-        existingLesson.Hour=lessonItem.Hour;
-        existingLesson.Minute=lessonItem.Minute;
+         if (lessonItem.Name!="string")
+        {
+            existingLesson.Name = lessonItem.Name;
+        }
+          if (lessonItem.Capacity!=0)
+        {
+            existingLesson.Capacity=lessonItem.Capacity;
+        }
+         if (lessonItem.Description!="string")
+        {
+            existingLesson.Description=lessonItem.Description;
+        }
+        if (lessonItem.Hour!=0)
+        {
+            existingLesson.Hour=lessonItem.Hour;
+        }
         _context.SaveChanges();
         return Ok();
     }

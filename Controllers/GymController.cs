@@ -30,7 +30,7 @@ public ActionResult<List<Gimnasio>>GetById(int Id){
 [Route("/Gyms/{PartialName}")]
 public ActionResult<List<Gimnasio>>GetByName(string PartialName){
     var Gimnasio = _context.Gyms.Where(x => x.Name.Contains(PartialName));
-    return Gimnasio==null ? NotFound(): Ok(Gimnasio);
+    return Gimnasio==null ? base.NotFound(): base.Ok((object)Gimnasio);
 }
 //Introducir un nuevo gimnasio
 [HttpPost]
