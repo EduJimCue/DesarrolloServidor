@@ -12,8 +12,8 @@ using Prueba.Data;
 namespace Prueba.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230420111954_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20230426084636_UserLesson")]
+    partial class UserLesson
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,10 @@ namespace Prueba.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -118,6 +122,9 @@ namespace Prueba.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Admin")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -141,10 +148,29 @@ namespace Prueba.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Prueba.Models.UserLesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("LeccionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UsuarioLesson");
+                });
+
             modelBuilder.Entity("Prueba.Models.GimnasioLesson", b =>
                 {
                     b.HasOne("Prueba.Models.Gimnasio", "Gimnasio")
-                        .WithMany("GymLessons")
+                        .WithMany()
                         .HasForeignKey("GimnasioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -169,11 +195,6 @@ namespace Prueba.Migrations
                         .IsRequired();
 
                     b.Navigation("Teacher");
-                });
-
-            modelBuilder.Entity("Prueba.Models.Gimnasio", b =>
-                {
-                    b.Navigation("GymLessons");
                 });
 #pragma warning restore 612, 618
         }

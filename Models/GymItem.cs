@@ -6,6 +6,7 @@ namespace Prueba.Models;
         public string Name { get; set; }
         public string Address { get; set; }
         public int MonthPrice { get; set; }
+        public string Description{ get; set; }
         public DateTime SignUpDate { get; set; }
      
 

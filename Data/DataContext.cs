@@ -11,6 +11,7 @@ namespace Prueba.Data
         public DbSet<Leccion> Lessons{ get; set; }
         public DbSet<Gimnasio> Gyms{ get; set; }
         public DbSet<GimnasioLesson> GymLesson{ get; set; }
+        public DbSet<UserLesson> UsuarioLesson{get; set;}
     }
 
 }

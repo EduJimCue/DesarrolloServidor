@@ -22,7 +22,7 @@ public ActionResult<List<Gimnasio>>Get(){
 [HttpGet]
 [Route("{Id}")]
 public ActionResult<List<User>>GetById(int Id){
-    var user = _context.Users.Find(Id);
+    var User = _context.Users.Find(Id);
     return User==null ? NotFound(): Ok(User);
 }
 //Obtener usuario por nombre
@@ -31,6 +31,14 @@ public ActionResult<List<User>>GetById(int Id){
 public ActionResult<List<User>>GetByName(string PartialName){
     var User = _context.Users.Where(x => x.Name.Contains(PartialName));
     return User==null ? NotFound(): Ok(User);
+}
+//Loguear a un usuario
+[HttpGet]
+[Route("/{UserName}/{PassWord}")]
+public ActionResult<User> GetByLogin(string UserName, string PassWord)
+{
+    User user = _context.Users.SingleOrDefault(u => u.Username == UserName && u.Password == PassWord);
+    return user == null ? NotFound() : Ok(user);
 }
 //Nuevo usuario
 [HttpPost]

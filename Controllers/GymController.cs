@@ -72,7 +72,10 @@ public ActionResult UpdateGym(Gimnasio gymItem)
         {
             existingGym.MonthPrice = gymItem.MonthPrice;
         }
-        
+        if (gymItem.Description!="string")
+        {
+            existingGym.Description = gymItem.Description;
+        }
         _context.SaveChanges();
         return Ok();
     }
