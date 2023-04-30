@@ -32,6 +32,24 @@ public ActionResult<List<Leccion>> GetById(int gymId)
             lessons.Add(lesson);
         }
     }
-    return lessons.Count == 0 ? NotFound("No existe un gimnasio con ese id") : Ok(lessons);
+    return lessons.Count == 0 ? NotFound("No existe un usuario con ese id") : Ok(lessons);
+}
+//Añado leccion a un gimnasio
+[HttpPost]
+public ActionResult CreateGymLesson(GimnasioLesson gimnasioLesson)
+{
+    var existingGymLesson = _context.GymLesson
+        .FirstOrDefault(ul => ul.GimnasioId == gimnasioLesson.GimnasioId && ul.LeccionId == gimnasioLesson.LeccionId);
+    if (existingGymLesson != null)
+    {
+        return Conflict("Ya existe una relación con este gimnasio y esta lección");
+    }
+    else
+    {
+        _context.GymLesson.Add(gimnasioLesson);
+        _context.SaveChanges();
+        var resourceUrl = Request.Path.ToString() + "/" + gimnasioLesson.Id;
+        return Created(resourceUrl, gimnasioLesson);
+    }  
 }
 }

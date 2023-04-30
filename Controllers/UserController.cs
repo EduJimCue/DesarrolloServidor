@@ -32,13 +32,20 @@ public ActionResult<List<User>>GetByName(string PartialName){
     var User = _context.Users.Where(x => x.Name.Contains(PartialName));
     return User==null ? NotFound(): Ok(User);
 }
-//Loguear a un usuario
+//Obtener usuario por nombre
 [HttpGet]
+[Route("/Teacher")]
+public ActionResult<List<User>>GetByTeacher(){
+    var User = _context.Users.Where(x => x.Role);
+    return User==null ? NotFound(): Ok(User);
+}
+//Loguear a un usuario
+[HttpPost]
 [Route("/{UserName}/{PassWord}")]
 public ActionResult<User> GetByLogin(string UserName, string PassWord)
 {
     User user = _context.Users.SingleOrDefault(u => u.Username == UserName && u.Password == PassWord);
-    return user == null ? NotFound() : Ok(user);
+    return user == null ? NotFound(null) : Ok(user);
 }
 //Nuevo usuario
 [HttpPost]
@@ -91,18 +98,27 @@ public ActionResult UpdateUser(User userItem)
         return Ok();
     }
 }
-//Eliminar usuario
 [HttpDelete]
 [Route("{Id}")]
 public ActionResult DeleteUser(int Id)
 {
-    var userItem = _context.Users.Find(Id);
-    if (userItem == null)
+    var user = _context.Users.Find(Id);
+    if (user == null)
     {
         return NotFound("No hay ningun usuario con ese Id");
     }
-    _context.Users.Remove(userItem);
+    
+    // Si el usuario es un profesor, eliminamos todas sus lecciones primero
+    if (user.Role)
+    {
+        var lessons = _context.Lessons.Where(l => l.TeacherId == Id).ToList();
+        _context.Lessons.RemoveRange(lessons);
+    }
+    
+    // Eliminamos al usuario
+    _context.Users.Remove(user);
     _context.SaveChanges();
+    
     return NoContent();
 }
 }

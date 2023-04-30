@@ -5,4 +5,5 @@ public int Id {get; set;}
 public int LeccionId { get; set; }
 public int UsuarioId{get;set;}
 
+
 }

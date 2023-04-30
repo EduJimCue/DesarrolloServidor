@@ -4,7 +4,6 @@ namespace Prueba.Models;
 {
     public string Name { get; set;}
     public int TeacherId{ get; set;}
-    public User Teacher{ get; set;}
     public List<User> students = new List<User>();
     public string Description { get; set; }
     public int Hour{ get; set; } 

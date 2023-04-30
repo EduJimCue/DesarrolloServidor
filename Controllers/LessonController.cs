@@ -54,7 +54,6 @@ public ActionResult CreateLesson(Leccion lessonItem)
             return Conflict("El usuario seleccionado no es un profesor");
         }
         // Asignar el usuario encontrado como profesor de la lección
-        lessonItem.Teacher = teacher;
         
         _context.Lessons.Add(lessonItem);
         _context.SaveChanges();
@@ -104,7 +103,7 @@ public ActionResult UpdateLesson(Leccion lessonItem)
         return Ok();
     }
 }
-//Eliminar una leccon
+//Eliminar una leccion
 [HttpDelete]
 [Route("{Id}")]
 public ActionResult DeleteLesson(int Id)
@@ -118,4 +117,5 @@ public ActionResult DeleteLesson(int Id)
     _context.SaveChanges();
     return NoContent();
 }
+
 }
