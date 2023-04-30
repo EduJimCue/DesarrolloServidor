@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Prueba.Data;
 
@@ -19,8 +20,14 @@ app.UseCors(options=>{
     options.AllowAnyHeader();
     options.AllowAnyMethod();
 });
+
+// Configure the HTTP request pipeline.
+var env = app.Services.GetRequiredService<IWebHostEnvironment>();
+if (env.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 
