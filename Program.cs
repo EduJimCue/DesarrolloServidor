@@ -19,13 +19,8 @@ app.UseCors(options=>{
     options.AllowAnyHeader();
     options.AllowAnyMethod();
 });
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
 app.UseHttpsRedirection();
 
