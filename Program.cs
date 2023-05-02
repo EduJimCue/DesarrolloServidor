@@ -22,12 +22,11 @@ app.UseCors(options=>{
 });
 
 // Configure the HTTP request pipeline.
-var env = app.Services.GetRequiredService<IWebHostEnvironment>();
-if (env.IsDevelopment())
-{
+
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 app.UseHttpsRedirection();
 
