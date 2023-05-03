@@ -15,26 +15,27 @@ public class UserController : ControllerBase
 }
 //Obtengo todos los usuarios
 [HttpGet]
+[Route("GetAllUsers")]
 public ActionResult<List<Gimnasio>>Get(){
     return Ok(_context.Users);
 }
 //Obtener usuario por id
 [HttpGet]
-[Route("{Id}")]
+[Route("GetUserId/{Id}")]
 public ActionResult<List<User>>GetById(int Id){
     var User = _context.Users.Find(Id);
     return User==null ? NotFound(): Ok(User);
 }
 //Obtener usuario por nombre
 [HttpGet]
-[Route("/Users/{PartialName}")]
+[Route("/GetUserPartialName/{PartialName}")]
 public ActionResult<List<User>>GetByName(string PartialName){
     var User = _context.Users.Where(x => x.Name.Contains(PartialName));
     return User==null ? NotFound(): Ok(User);
 }
-//Obtener usuario por nombre
+//Obtener usuario por profesor
 [HttpGet]
-[Route("/Teacher")]
+[Route("/GetByTeacher")]
 public ActionResult<List<User>>GetByTeacher(){
     var User = _context.Users.Where(x => x.Role);
     return User==null ? NotFound(): Ok(User);
@@ -49,6 +50,7 @@ public ActionResult<User> GetByLogin(string UserName, string PassWord)
 }
 //Nuevo usuario
 [HttpPost]
+[Route("PostUser")]
 public ActionResult CreateUser(User userItem)
 {
     var existingUser =_context.Users.Find(userItem.Id);
@@ -73,6 +75,7 @@ public ActionResult CreateUser(User userItem)
 }
 //Modificar un usuario
 [HttpPut]
+[Route("PutUser")]
 public ActionResult UpdateUser(User userItem)
 {
     var existingUser = _context.Users.Find(userItem.Id);
@@ -99,7 +102,7 @@ public ActionResult UpdateUser(User userItem)
     }
 }
 [HttpDelete]
-[Route("{Id}")]
+[Route("DeleteUser/{Id}")]
 public ActionResult DeleteUser(int Id)
 {
     var user = _context.Users.Find(Id);

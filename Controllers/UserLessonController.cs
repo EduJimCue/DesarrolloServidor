@@ -15,11 +15,12 @@ public class UserLessonController : ControllerBase
 }
 //Obtengo todas las relaciones gimnasio-leccion
 [HttpGet]
+[Route("GetAllUserLesson")]
 public ActionResult<List<UserLesson>>Get(){
     return Ok(_context.UsuarioLesson);
 }
 //Obtengo todas las lecciones que tiene un usuario
-[HttpGet("/Userlesson/{userId}")]
+[HttpGet("/GetUserLessonUser/{userId}")]
 public ActionResult<List<UserLesson>> GetByUserId(int userId)
 {
     var userLessons = _context.UsuarioLesson.Where(item => item.UsuarioId == userId).ToList();
@@ -35,7 +36,7 @@ public ActionResult<List<UserLesson>> GetByUserId(int userId)
     return lessons.Count == 0 ? NotFound("No existe un usuario con ese id") : Ok(lessons);
 }
 //Obtengo todos los usuarios que estan en una leccion
-[HttpGet("/LessonUser/{lessonId}")]
+[HttpGet("/GetLessonUser/{lessonId}")]
 public ActionResult<List<UserLesson>> GetByLessonId(int lessonId)
 {
     var userLessons = _context.UsuarioLesson.Where(item => item.LeccionId == lessonId).ToList();
@@ -43,6 +44,7 @@ public ActionResult<List<UserLesson>> GetByLessonId(int lessonId)
 }
 //Apuntar a un usuario en una leccion
 [HttpPost]
+[Route("PostUserLesson")]
 public ActionResult CreateUserLesson(UserLesson userLesson)
 {
     var existingUserLesson = _context.UsuarioLesson
@@ -61,7 +63,7 @@ public ActionResult CreateUserLesson(UserLesson userLesson)
 }
 //Eliminar relacion usuario leccion
 [HttpDelete]
-[Route("{userId}/{lessonId}")]
+[Route("DeleteUserLesson/{userId}/{lessonId}")]
 public ActionResult DeleteUserLesson(int userId, int lessonId)
 {
     var userLesson = _context.UsuarioLesson.SingleOrDefault(ul => ul.UsuarioId == userId && ul.LeccionId == lessonId);

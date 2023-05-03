@@ -15,25 +15,27 @@ public class GymController : ControllerBase
 }
 //Obtengo todos los gimnasios
 [HttpGet]
+[Route("GetAllGyms")]
 public ActionResult<List<Gimnasio>>Get(){
     return Ok(_context.Gyms);
 }
 //Obtengo gimnasio por id
 [HttpGet]
-[Route("{Id}")]
+[Route("GetIdGym/{Id}")]
 public ActionResult<List<Gimnasio>>GetById(int Id){
     var Gimnasio = _context.Gyms.Find(Id);
     return Gimnasio==null ? NotFound(): Ok(Gimnasio);
 }
 //Obtener un gimnasio con un nombre parcial
 [HttpGet]
-[Route("/Gyms/{PartialName}")]
+[Route("/GetPatialNameGym/{PartialName}")]
 public ActionResult<List<Gimnasio>>GetByName(string PartialName){
     var Gimnasio = _context.Gyms.Where(x => x.Name.Contains(PartialName));
     return Gimnasio==null ? base.NotFound(): base.Ok((object)Gimnasio);
 }
 //Introducir un nuevo gimnasio
 [HttpPost]
+[Route("PostGym")]
 public ActionResult CreateGym(Gimnasio gymItem)
 {
     var existingGym =_context.Gyms.Find(gymItem.Id);
@@ -51,6 +53,7 @@ public ActionResult CreateGym(Gimnasio gymItem)
 }
 //Modificar un gimnasio
 [HttpPut]
+[Route("PutGym")]
 public ActionResult UpdateGym(Gimnasio gymItem)
 {
     var existingGym = _context.Gyms.Find(gymItem.Id);
@@ -82,7 +85,7 @@ public ActionResult UpdateGym(Gimnasio gymItem)
 }
 //Eliminar un gimnasio
 [HttpDelete]
-[Route("{Id}")]
+[Route("DeleteGym/{Id}")]
 public ActionResult DeleteGym(int Id)
 {
     var gym = _context.Gyms.Find(Id);
