@@ -5,7 +5,7 @@ using Prueba.Models;
 namespace Prueba.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("UserLesson")]
 public class UserLessonController : ControllerBase
 {
   private readonly DataContext _context;
