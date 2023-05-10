@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prueba.Data;
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<DataContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
@@ -25,6 +27,12 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Apply any pending migrations
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    dbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -36,6 +44,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
     });
 }
+
+app.UseHttpsRedirection();
 
 app.UseRouting();
 

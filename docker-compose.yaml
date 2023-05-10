@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    ports:
+      - "6376:80"
+    depends_on:
+      - db
+    environment:
+      - variable=valorAdjudicado
+    networks:
+      - my_network
+
+  db:
+    image: mcr.microsoft.com/azure-sql-edge
+    container_name: aasql2
+    environment:
+      ACCEPT_EULA: "1"
+      MSSQL_SA_PASSWORD: "EduP@ssWord"
+      MSSQL_PID: "Developer"
+      MSSQL_USER: "sa"
+    ports:
+      - "6733:1433"
+    volumes:
+      - data:/var/lib/mssql
+    networks:
+      - my_network
+      
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    networks:
+      - my_network
+
+volumes:
+  data:
+
+networks:
+  my_network:

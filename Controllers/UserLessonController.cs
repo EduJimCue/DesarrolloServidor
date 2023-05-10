@@ -40,7 +40,7 @@ public ActionResult<List<UserLesson>> GetByUserId(int userId)
 public ActionResult<List<UserLesson>> GetByLessonId(int lessonId)
 {
     var userLessons = _context.UsuarioLesson.Where(item => item.LeccionId == lessonId).ToList();
-    return userLessons.Count == 0 ? NotFound("No existe una leccion con ese id") : Ok(userLessons);
+    return userLessons.Count == 0 ? NotFound(userLessons) : Ok(userLessons);
 }
 //Apuntar a un usuario en una leccion
 [HttpPost]
