@@ -27,8 +27,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Apply any pending migrations
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -40,6 +38,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
     });
 }
+
+app.UseHttpsRedirection();
 
 app.UseRouting();
 

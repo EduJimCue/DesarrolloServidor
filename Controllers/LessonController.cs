@@ -15,27 +15,27 @@ public class LessonController : ControllerBase
 }
 //Obtengo todas las lecciones
 [HttpGet]
-[Route("GetAllLessons")]
+[Route("")]
 public ActionResult<List<Leccion>>Get(){
     return Ok(_context.Lessons);
 }
 //Obtengo leccion por id
 [HttpGet]
-[Route("GetLessonId/{Id}")]
+[Route("{Id}")]
 public ActionResult<List<Leccion>>GetById(int Id){
     var Lesson = _context.Lessons.Find(Id);
     return Lesson==null ? NotFound(): Ok(Lesson);
 }
 //Obtener una leccion por nombre parcial
 [HttpGet]
-[Route("/GetLessonPatialName/{PartialName}")]
+[Route("{PartialName}")]
 public ActionResult<List<Leccion>>GetByName(string PartialName){
     var Lesson = _context.Lessons.Where(x => x.Name.Contains(PartialName));
     return Lesson==null ? NotFound(): Ok(Lesson);
 }
 //Introducir una nueva leccion
 [HttpPost]
-[Route("PostLesson")]
+[Route("")]
 public ActionResult CreateLesson(Leccion lessonItem)
 {
     var existingLesson =_context.Lessons.Find(lessonItem.Id);
@@ -65,7 +65,7 @@ public ActionResult CreateLesson(Leccion lessonItem)
 }
 //Modificar una leccion
 [HttpPut]
-[Route("PutLesson")]
+[Route("")]
 public ActionResult UpdateLesson(Leccion lessonItem)
 {
     var existingLesson = _context.Lessons.Find(lessonItem.Id);
@@ -108,7 +108,7 @@ public ActionResult UpdateLesson(Leccion lessonItem)
 }
 //Eliminar una leccion
 [HttpDelete]
-[Route("DeleteLesson/{Id}")]
+[Route("{Id}")]
 public ActionResult DeleteLesson(int Id)
 {
     var lesson = _context.Lessons.Find(Id);

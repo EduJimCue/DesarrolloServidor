@@ -14,14 +14,14 @@ services:
 
   db:
     image: mcr.microsoft.com/azure-sql-edge
-    container_name: aasql2
+    container_name: aasql
     environment:
       ACCEPT_EULA: "1"
       MSSQL_SA_PASSWORD: "EduP@ssWord"
       MSSQL_PID: "Developer"
       MSSQL_USER: "sa"
     ports:
-      - "6733:1433"
+      - "6736:1433"
     volumes:
       - data:/var/lib/mssql
     networks:

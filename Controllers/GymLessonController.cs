@@ -15,12 +15,12 @@ public class GymLessonController : ControllerBase
 }
 //Obtengo todas las relaciones gimnasio-leccion
 [HttpGet]
-[Route("GetAllGymLessons")]
+[Route("")]
 public ActionResult<List<GimnasioLesson>>Get(){
     return Ok(_context.GymLesson);
 }
 //Obtengo todas las leccion de un gimnasio por su id
-[HttpGet("GetGymLessonId/{gymId}")]
+[HttpGet("{gymId}")]
 public ActionResult<List<Leccion>> GetById(int gymId)
 {
     var gymLessons = _context.GymLesson.Where(item => item.GimnasioId == gymId).ToList();
@@ -37,7 +37,7 @@ public ActionResult<List<Leccion>> GetById(int gymId)
 }
 //Añado leccion a un gimnasio
 [HttpPost]
-[Route("PostGymLesson")]
+[Route("")]
 public ActionResult CreateGymLesson(GimnasioLesson gimnasioLesson)
 {
     var existingGymLesson = _context.GymLesson
